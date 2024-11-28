@@ -1,6 +1,6 @@
 const express = require("express");
 const pool = require("../db/pool");
-
+const categoriesRoutes = require("../routes/categories");
 const app = express();
 
 // Middleware
@@ -21,6 +21,8 @@ app.get("/test-db", async (req, res) => {
     res.status(500).send("Database connection failed");
   }
 });
+
+app.use("/categories", categoriesRoutes);
 
 // Start server
 const PORT = 3000;
