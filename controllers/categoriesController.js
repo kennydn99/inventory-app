@@ -3,9 +3,9 @@ const pool = require("../db/pool");
 const getAllCategories = async (req, res) => {
   try {
     const { rows } = await pool.query("SELECT * FROM categories");
-    res.json(rows);
+    return rows;
   } catch (err) {
-    res.status(500).send(err.message);
+    throw new Error(err.message);
   }
 };
 

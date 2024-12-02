@@ -1,7 +1,14 @@
 const express = require("express");
+const path = require("node:path");
 const pool = require("../db/pool");
 const categoriesRoutes = require("../routes/categories");
+const itemRoutes = require("../routes/items");
+
 const app = express();
+
+// Set view engine
+app.set("views", path.join(__dirname, "../views"));
+app.set("view engine", "ejs");
 
 // Middleware
 app.use(express.json()); // Parse JSON requests
@@ -23,6 +30,7 @@ app.get("/test-db", async (req, res) => {
 });
 
 app.use("/categories", categoriesRoutes);
+app.use("/items", itemRoutes);
 
 // Start server
 const PORT = 3000;
