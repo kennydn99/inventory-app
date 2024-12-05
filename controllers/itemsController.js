@@ -5,7 +5,7 @@ const getAllItems = async (req, res) => {
     const { rows } = await pool.query("SELECT * FROM items");
     res.json(rows);
   } catch (err) {
-    res.status(500).send(err.message);
+    throw new Error(err.message);
   }
 };
 
@@ -24,20 +24,37 @@ const createItem = async (req, res) => {
   }
 };
 
-const getItemById = async (req, res) => {
-  const { id } = req.params;
-
+const getItemById = async (id) => {
   try {
-    const result = await pool.query("SELECT * FROM items WHERE id = $1", [id]);
+    const result = await pool.query(
+      `SELECT items.id, items.name, items.year, items.price, items.category_id, categories.name AS category_name 
+       FROM items 
+       JOIN categories ON items.category_id = categories.id 
+       WHERE items.id = $1`,
+      [id]
+    );
 
     if (result.rows.length === 0) {
-      return res.status(404).json({ message: "Item not found" });
+      return null; // Return null if the item is not found
     }
 
-    res.json(result.rows[0]);
+    return result.rows[0]; // Return the found item
   } catch (error) {
-    console.error("Error retrieving item:", error);
-    res.status(500).json({ message: "Error retrieving item" });
+    console.error("Error in getItemById:", error);
+    throw new Error("Error retrieving item"); // Throw error to be handled by the caller
+  }
+};
+
+const getItemsByCategory = async (categoryId) => {
+  try {
+    const { rows } = await pool.query(
+      "SELECT * FROM items WHERE category_id = $1",
+      [categoryId]
+    );
+    return rows;
+  } catch (error) {
+    console.error("Error fetching items:", error);
+    throw new Error("Database error");
   }
 };
 
@@ -91,4 +108,5 @@ module.exports = {
   getItemById,
   updateItem,
   deleteItem,
+  getItemsByCategory,
 };

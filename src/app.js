@@ -12,6 +12,7 @@ app.set("view engine", "ejs");
 
 // Middleware
 app.use(express.json()); // Parse JSON requests
+app.use(express.urlencoded({ extended: true }));
 
 // Test route
 app.get("/", (req, res) => {
