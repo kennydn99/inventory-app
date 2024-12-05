@@ -9,18 +9,15 @@ const getAllItems = async (req, res) => {
   }
 };
 
-const createItem = async (req, res) => {
-  const { name, category_id } = req.body;
-
+const createItem = async ({ name, year, price, category_id }) => {
   try {
-    const result = await pool.query(
-      "INSERT INTO items (name, category_id) VALUES ($1, $2) RETURNING *",
-      [name, category_id]
+    await pool.query(
+      "INSERT INTO items (name, year, price, category_id) VALUES ($1, $2, $3, $4)",
+      [name, year, price, category_id]
     );
-    res.status(201).json(result.rows[0]); // Respond with the created item.
-  } catch (error) {
-    console.error("Error creating item:", error);
-    res.status(500).json({ message: "Error creating item" });
+  } catch (err) {
+    console.error("Error in createItem:", err);
+    throw new Error("Error creating item");
   }
 };
 

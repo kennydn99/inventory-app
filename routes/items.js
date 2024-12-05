@@ -6,25 +6,13 @@ const categoriesController = require("../controllers/categoriesController");
 // CRUD routes for items
 router.get("/", itemsController.getAllItems);
 
-// Route to display all items in a category
-router.get("/:categoryId/items", async (req, res) => {
+// Serve new item form
+router.get("/new", async (req, res) => {
   try {
-    const { categoryId } = req.params;
-
-    // Fetch category and its items
-    const category = await categoriesController.getCategoryById(categoryId);
-
-    if (!category) {
-      return res.status(404).send("Category not found");
-    }
-
-    const items = await itemsController.getItemsByCategory(categoryId);
-
-    // Render the 'items/index' view with the fetched data
-    res.render("items/index", { category, items });
-  } catch (error) {
-    console.error("Error fetching category or items:", error);
-    res.status(500).send("Error fetching category or items");
+    const categories = await categoriesController.getAllCategories();
+    res.render("items/new", { categories });
+  } catch (err) {
+    res.status(500).send("Error loading form");
   }
 });
 
@@ -45,7 +33,17 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.post("/", itemsController.createItem);
+// Create items
+router.post("/", async (req, res) => {
+  try {
+    const { name, year, price, category_id } = req.body;
+    await itemsController.createItem({ name, year, price, category_id });
+    res.redirect("/categories");
+  } catch (err) {
+    res.status(500).send("Error creating item");
+  }
+});
+
 router.put("/:id", itemsController.updateItem);
 router.delete("/:id", itemsController.deleteItem);
 

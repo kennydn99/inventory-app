@@ -9,16 +9,12 @@ const getAllCategories = async (req, res) => {
   }
 };
 
-const createCategory = async (req, res) => {
+const createCategory = async ({ name }) => {
   try {
-    const { name } = req.body;
-    const result = await pool.query(
-      "INSERT INTO categories (name) VALUES ($1) RETURNING *",
-      [name]
-    );
-    res.status(201).json(result.rows[0]);
+    await pool.query("INSERT INTO categories (name) VALUES ($1)", [name]);
   } catch (err) {
-    res.status(500).send(err.message);
+    console.error("Error in createCategory:", err);
+    throw new Error("Error creating category");
   }
 };
 
