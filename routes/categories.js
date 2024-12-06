@@ -51,8 +51,31 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.get("/:id", categoriesController.getCategoryById);
-router.put("/:id", categoriesController.updateCategory);
+// render update form
+router.get("/:id/update", async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const category = await categoriesController.getCategoryById(id);
+    res.render("categories/update", { category });
+  } catch (error) {
+    res.status(500).send("Error loading category for updating");
+  }
+});
+
+// handle updating category
+router.post("/:id/update", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name } = req.body;
+
+    await categoriesController.updateCategory(id, name);
+    res.redirect(`/categories`);
+  } catch (error) {
+    res.status(500).send("Error updating category");
+  }
+});
+
 router.delete("/:id", categoriesController.deleteCategory);
 
 module.exports = router;

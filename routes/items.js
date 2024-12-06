@@ -44,7 +44,31 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.put("/:id", itemsController.updateItem);
+// Route to render the edit form for an item
+router.get("/:id/update", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const item = await itemsController.getItemById(id);
+    const categories = await categoriesController.getAllCategories();
+    res.render("items/update", { item, categories });
+  } catch (error) {
+    res.status(500).send("Error loading item for updating");
+  }
+});
+
+//Handle udpating item
+router.post("/:id/update", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, year, price, category_id } = req.body;
+
+    await itemsController.updateItem(id, { name, year, price, category_id });
+    res.redirect(`/items/${id}`);
+  } catch (error) {
+    res.status(500).send("Error updating item");
+  }
+});
+
 router.delete("/:id", itemsController.deleteItem);
 
 module.exports = router;

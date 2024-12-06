@@ -33,19 +33,14 @@ const getCategoryById = async (id) => {
   }
 };
 
-const updateCategory = async (req, res) => {
+const updateCategory = async (id, name) => {
   try {
-    const { id } = req.params;
-    const { name } = req.body;
-    const result = await pool.query(
-      "UPDATE categories SET name = $1 WHERE id = $2 RETURNING *",
-      [name, id]
-    );
-    if (result.rows.length === 0)
-      return res.status(404).send("Category not found");
-    res.json(result.rows[0]);
-  } catch (err) {
-    res.status(500).send(err.message);
+    await pool.query("UPDATE categories SET name = $1 WHERE id = $2", [
+      name,
+      id,
+    ]);
+  } catch (error) {
+    throw new Error("Error updating category");
   }
 };
 

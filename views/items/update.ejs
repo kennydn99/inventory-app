@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Update Item</title>
+  </head>
+  <body>
+    <h1>Update Item</h1>
+    <form action="/items/<%= item.id %>/update" method="POST">
+      <label for="name">Name:</label>
+      <input
+        type="text"
+        id="name"
+        name="name"
+        value="<%= item.name %>"
+        required
+      />
+
+      <label for="year">Year:</label>
+      <input
+        type="number"
+        id="year"
+        name="year"
+        value="<%= item.year %>"
+        required
+      />
+
+      <label for="price">Price:</label>
+      <input
+        type="number"
+        id="price"
+        name="price"
+        value="<%= item.price %>"
+        required
+      />
+
+      <label for="category">Category:</label>
+      <select name="category_id" id="category" required>
+        <% categories.forEach(category => { %>
+            <option value="<%= category.id %>" <%= category.id === item.category_id ? 'selected' : '' %>>
+                <%= category.name %>
+            </option>
+        <% }) %>
+      </select>
+
+      <button type="submit">Update</button>
+    </form>
+  </body>
+</html>

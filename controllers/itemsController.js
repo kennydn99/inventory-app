@@ -55,24 +55,14 @@ const getItemsByCategory = async (categoryId) => {
   }
 };
 
-const updateItem = async (req, res) => {
-  const { id } = req.params;
-  const { name, category_id } = req.body;
-
+const updateItem = async (id, { name, year, price, category_id }) => {
   try {
-    const result = await pool.query(
-      "UPDATE items SET name = $1, category_id = $2 WHERE id = $3 RETURNING *",
-      [name, category_id, id]
+    await pool.query(
+      "UPDATE items SET name = $1, year = $2, price = $3, category_id = $4 WHERE id = $5",
+      [name, year, price, category_id, id]
     );
-
-    if (result.rows.length === 0) {
-      return res.status(404).json({ message: "Item not found" });
-    }
-
-    res.json(result.rows[0]); // Respond with the updated item.
   } catch (error) {
-    console.error("Error updating item:", error);
-    res.status(500).json({ message: "Error updating item" });
+    throw new Error("Error updating item");
   }
 };
 
