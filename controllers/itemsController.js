@@ -66,26 +66,11 @@ const updateItem = async (id, { name, year, price, category_id }) => {
   }
 };
 
-const deleteItem = async (req, res) => {
-  const { id } = req.params;
-
+const deleteItem = async (id) => {
   try {
-    const result = await pool.query(
-      "DELETE FROM items WHERE id = $1 RETURNING *",
-      [id]
-    );
-
-    if (result.rows.length === 0) {
-      return res.status(404).json({ message: "Item not found" });
-    }
-
-    res.json({
-      message: "Item deleted successfully",
-      deletedItem: result.rows[0],
-    });
+    await pool.query("DELETE FROM items WHERE id = $1", [id]);
   } catch (error) {
-    console.error("Error deleting item:", error);
-    res.status(500).json({ message: "Error deleting item" });
+    throw new Error("Error deleting item");
   }
 };
 

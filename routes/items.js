@@ -69,6 +69,15 @@ router.post("/:id/update", async (req, res) => {
   }
 });
 
-router.delete("/:id", itemsController.deleteItem);
+router.post("/:id/delete", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    await itemsController.deleteItem(id);
+    res.redirect("/categories");
+  } catch (error) {
+    res.status(500).send("Error deleting item");
+  }
+});
 
 module.exports = router;

@@ -13,6 +13,13 @@
         <a href="/categories/<%= category.id %>/items">
           <%= category.name %>
         </a>
+        <form
+          action="/categories/<%= category.id %>/delete"
+          method="POST"
+          onsubmit="return confirm('Are you sure you want to delete this category?');"
+        >
+          <button type="submit">Delete Category</button>
+        </form>
       </li>
       <% }) %>
     </ul>

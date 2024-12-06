@@ -44,13 +44,11 @@ const updateCategory = async (id, name) => {
   }
 };
 
-const deleteCategory = async (req, res) => {
+const deleteCategory = async (id) => {
   try {
-    const { id } = req.params;
     await pool.query("DELETE FROM categories WHERE id = $1", [id]);
-    res.status(204).send(); // No content
-  } catch (err) {
-    res.status(500).send(err.message);
+  } catch (error) {
+    throw new Error("Error deleting category");
   }
 };
 
