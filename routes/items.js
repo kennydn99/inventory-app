@@ -4,7 +4,14 @@ const itemsController = require("../controllers/itemsController");
 const categoriesController = require("../controllers/categoriesController");
 
 // CRUD routes for items
-router.get("/", itemsController.getAllItems);
+router.get("/", async (req, res) => {
+  try {
+    const items = await itemsController.getAllItems();
+    res.render("items/index", { items });
+  } catch (err) {
+    throw new Error(err.message);
+  }
+});
 
 // Serve new item form
 router.get("/new", async (req, res) => {

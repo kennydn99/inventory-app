@@ -6,6 +6,8 @@
     <title>Update Item</title>
   </head>
   <body>
+    <%- include('../partials/navbar') %>
+
     <h1>Update Item</h1>
     <form action="/items/<%= item.id %>/update" method="POST">
       <label for="name">Name:</label>

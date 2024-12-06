@@ -6,10 +6,12 @@
     <title><%= item.name %></title>
   </head>
   <body>
+    <%- include('../partials/navbar') %>
     <h1><%= item.name %></h1>
     <p>Year: <%= item.year %></p>
     <p>Price: $<%= item.price %></p>
     <p>Category: <%= item.category_name %></p>
+    <a href="/items/<%= item.id %>/update">Update Item</a>
     <form
       action="/items/<%= item.id %>/delete"
       method="POST"

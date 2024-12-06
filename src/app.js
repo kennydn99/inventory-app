@@ -16,7 +16,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Test route
 app.get("/", (req, res) => {
-  res.send("Inventory App is running!");
+  res.render("home");
 });
 
 // Test database query

@@ -6,13 +6,16 @@
     <title>Categories</title>
   </head>
   <body>
+    <%- include('../partials/navbar') %>
     <h1>Categories</h1>
+    <a href="/categories/new">Create New Category</a>
     <ul>
       <% categories.forEach(category => { %>
       <li>
         <a href="/categories/<%= category.id %>/items">
           <%= category.name %>
         </a>
+        <a href="/categories/<%= category.id %>/update">Update Category</a>
         <form
           action="/categories/<%= category.id %>/delete"
           method="POST"
