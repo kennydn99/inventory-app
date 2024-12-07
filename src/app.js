@@ -15,7 +15,6 @@ app.use(express.json()); // Parse JSON requests
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname)));
 
-// Test route
 app.get("/", (req, res) => {
   res.render("home");
 });

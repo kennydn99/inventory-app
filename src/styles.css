@@ -126,3 +126,18 @@ form button {
 form button:hover {
   background: #218838;
 }
+
+@media (max-width: 600px) {
+  .container {
+    padding: 10px;
+  }
+
+  .navbar {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  ul li {
+    padding: 5px;
+  }
+}
