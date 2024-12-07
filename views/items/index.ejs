@@ -3,18 +3,21 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/styles.css" />
     <title>All Items in <%= category.name %></title>
   </head>
   <body>
     <%- include('../partials/navbar') %>
-    <h1>Items in <%= category.name %></h1>
-    <a href="/items/new">Create New Item</a>
-    <ul>
-      <% items.forEach(item => { %>
-      <li>
-        <a href="/items/<%= item.id %>"> <%= item.name %> </a>
-      </li>
-      <% }) %>
-    </ul>
+    <div class="container">
+      <h1>Items in <%= category.name %></h1>
+      <a href="/items/new">Create New Item</a>
+      <ul>
+        <% items.forEach(item => { %>
+        <li>
+          <a href="/items/<%= item.id %>"> <%= item.name %> </a>
+        </li>
+        <% }) %>
+      </ul>
+    </div>
   </body>
 </html>
