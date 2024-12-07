@@ -4,26 +4,30 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/styles.css" />
-    <title>Categories</title>
+    <title>Makes</title>
   </head>
   <body>
     <%- include('../partials/navbar') %>
-    <h1>Categories</h1>
     <div class="container">
-      <a href="/categories/new">Create New Category</a>
+      <div class="header">
+        <h1>Makes</h1>
+        <a href="/categories/new">Create New Make</a>
+      </div>
       <ul>
         <% categories.forEach(category => { %>
         <li>
-          <a href="/categories/<%= category.id %>/items">
-            <%= category.name %>
-          </a>
-          <a href="/categories/<%= category.id %>/update">Update Category</a>
+          <div class="list-item">
+            <a href="/categories/<%= category.id %>/items">
+              <%= category.name %>
+            </a>
+            <a href="/categories/<%= category.id %>/update">Update</a>
+          </div>
           <form
             action="/categories/<%= category.id %>/delete"
             method="POST"
-            onsubmit="return confirm('Are you sure you want to delete this category?');"
+            onsubmit="return confirm('Are you sure you want to delete this Make?');"
           >
-            <button type="submit">Delete Category</button>
+            <button type="submit">Delete</button>
           </form>
         </li>
         <% }) %>

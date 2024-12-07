@@ -45,7 +45,7 @@ router.post("/", async (req, res) => {
   try {
     const { name, year, price, category_id } = req.body;
     await itemsController.createItem({ name, year, price, category_id });
-    res.redirect("/categories");
+    res.redirect(`/categories/${category_id}/items`);
   } catch (err) {
     res.status(500).send("Error creating item");
   }

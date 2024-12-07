@@ -4,15 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/styles.css" />
-    <title>New Category</title>
+    <title>New Make</title>
   </head>
   <body>
     <%- include('../partials/navbar') %>
-    <h1>Add New Category</h1>
+    <h1>Add New Make</h1>
     <form action="/categories" method="POST">
-      <label for="name">Category Name:</label>
+      <label for="name">Make Name:</label>
       <input type="text" id="name" name="name" required minlength="3" />
-      <button type="submit">Add Category</button>
+      <button type="submit">Add Make</button>
     </form>
   </body>
 </html>

@@ -4,13 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/styles.css" />
-    <title>All Items in <%= category.name %></title>
+    <title>All Models in <%= category.name %></title>
   </head>
   <body>
     <%- include('../partials/navbar') %>
     <div class="container">
-      <h1>Items in <%= category.name %></h1>
-      <a href="/items/new">Create New Item</a>
+      <div class="header">
+        <h1>Models in <%= category.name %></h1>
+        <a href="/items/new">Create New Model</a>
+      </div>
       <ul>
         <% items.forEach(item => { %>
         <li>
